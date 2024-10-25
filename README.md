@@ -38,10 +38,10 @@ iii. order_by: Ordena las joyas según el valor de este parámetro, ejemplo: sto
 ---
 #### Ejecucion:
 1. En la terminal de backend ejecutar las siguientes sentencia:
-	-- npm init -y
-	-- npm i pg express dotenv
-	-- npm i nodemon -D
-	-- nodemon app.js  
+	- npm init -y
+	- npm i pg express dotenv
+	- npm i nodemon -D
+	- nodemon app.js  
 ---
 
 ⌨️Escrito con ❤️ y [Macarena Osses](https://github.com/Makaosva)
