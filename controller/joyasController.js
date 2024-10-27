@@ -13,7 +13,6 @@ const read = async (req, res) => {
 
 const readById = async (req, res) => {
   const id = req.params.id;
-  console.log("read -->", id);
   try {
     const joya = await joyasModel.findByID(id);
     if (!joya) {
@@ -41,11 +40,12 @@ const readByFilter = async (req, res) => {
 };
 
 const prepararHATEOAS = (joyas, page) => {
+  const url = "http://localhost:3000";
   const results = joyas.map((m) => {
     return {
       name: m.nombre,
       categoria: m.categoria,
-      href: `/joyas/joya/${m.id}`,
+      href: `${url}/joyas/joya/${m.id}`,
     };
   });
   const prev = page <= 1 ? null : page - 1;
@@ -63,7 +63,7 @@ const prepararHATEOAS = (joyas, page) => {
 };
 
 const reportarConsulta = async (req, res, next) => {
-  const parametros = req.params;
+  const parametros = req.query;
   const url = req.url;
   console.log(
     `Hoy ${new Date()} 

@@ -16,7 +16,6 @@ const findAll = async ({ limit = 10, order_by = "id_ASC", page = 1 }) => {
 };
 
 const findByID = async (id) => {
-  console.log("model id-->", id);
   const consulta = "SELECT * FROM inventario WHERE id = $1;";
   const values = [id];
   const { rows: joyas } = await pool.query(consulta, values);
@@ -25,7 +24,6 @@ const findByID = async (id) => {
 
 export const findJoyasByFilter = async (extras = "", values = []) => {
   const consulta = `SELECT * FROM inventario ${extras};`;
-
   const { rows: joyas } = await pool.query(consulta, values);
   return joyas;
 };
