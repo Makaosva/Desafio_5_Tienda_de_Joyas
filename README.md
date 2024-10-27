@@ -42,6 +42,11 @@ iii. order_by: Ordena las joyas según el valor de este parámetro, ejemplo: sto
 	- npm i pg express dotenv
 	- npm i nodemon -D
 	- nodemon app.js  
+
+2. Para realizar una busqueda general se pueden agregar estos parametros:
+    - order_by=metal_DESC
+    - limit=4
+    - page=1
 ---
 
 ⌨️Escrito con ❤️ y [Macarena Osses](https://github.com/Makaosva)

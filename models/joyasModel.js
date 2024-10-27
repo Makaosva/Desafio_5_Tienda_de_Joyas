@@ -1,10 +1,17 @@
 import { pool } from "../database/connections.js";
 import format from "pg-format";
 
-const findAll = async ({ limit = 5 }) => {
-  const consulta = "SELECT * FROM inventario LIMIT $1;";
-  const query = [limit];
-  const { rows: joyas } = await pool.query(consulta, query);
+const findAll = async ({ limit = 10, order_by = "id_ASC", page = 1 }) => {
+  const offset = (page - 1) * limit;
+  const [nombre, orden] = order_by.split("_");
+  const formattedQuery = format(
+    "SELECT * FROM inventario ORDER BY %s %s LIMIT %s OFFSET %s;",
+    nombre,
+    orden,
+    limit,
+    offset
+  );
+  const { rows: joyas } = await pool.query(formattedQuery);
   return joyas;
 };
 
@@ -13,18 +20,6 @@ const findByID = async (id) => {
   const consulta = "SELECT * FROM inventario WHERE id = $1;";
   const values = [id];
   const { rows: joyas } = await pool.query(consulta, values);
-  return joyas;
-};
-
-const findByOrder = async ({ limit = 5, order_by = "id_ASC" }) => {
-  const [nombre, orden] = order_by.split("_");
-  const formattedQuery = format(
-    "SELECT * FROM inventario ORDER BY %s %s LIMIT %s;",
-    nombre,
-    orden,
-    limit
-  );
-  const { rows: joyas } = await pool.query(formattedQuery);
   return joyas;
 };
 
@@ -59,23 +54,9 @@ export const prepareFilter = (queryString) => {
   return [filters, values];
 };
 
-const findByPagination = async ({ limit = 5, page = 1 }) => {
-  const offset = (page - 1) * limit;
-  const consulta = format(
-    "SELECT * FROM inventario LIMIT %s OFFSET %s;",
-    limit,
-    offset
-  );
-
-  const { rows: joyas } = await pool.query(consulta);
-  return joyas;
-};
-
 export const joyasModel = {
   findAll,
   findByID,
   findJoyasByFilter,
   prepareFilter,
-  findByOrder,
-  findByPagination,
 };
